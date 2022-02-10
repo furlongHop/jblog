@@ -4,7 +4,7 @@
 <mapper namespace="user">
 	
 	 <!-- 회원가입(유저 정보 추가) -->
-	<insert id="insert" parameterType="com.javaex.vo.UserVo">
+	<insert id="insert" parameterType="UserVo">
     	<![CDATA[
     		insert into users
     		values(seq_users_no.nextval, #{id} , #{userName}, #{password}, sysdate)
@@ -12,7 +12,7 @@
     </insert>
     
     <!-- 유저 정보 가져오기(로그인 시) -->
-	<select id="selectOne" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+	<select id="selectOne" parameterType="UserVo" resultType="UserVo">
     	<![CDATA[
     		select	userNo,
         			id,
@@ -22,6 +22,15 @@
 			from users
 			where id = #{id}
 			and password = #{password}
+    	]]>
+    </select>
+    
+    <!-- id 중복 체크 -->
+    <select id="checkId" parameterType="String" resultType="int">
+    	<![CDATA[
+    		select count(id)
+    		from users
+    		where id = #{id}
     	]]>
     </select>
 

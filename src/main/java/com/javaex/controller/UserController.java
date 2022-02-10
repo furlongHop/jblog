@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
@@ -18,6 +20,17 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	
+	
+	//아이디 중복 체크
+	@ResponseBody //json을 이용하기 때문
+	@RequestMapping(value="/idCheck")
+	public String idCheck(@RequestParam("id") String inputId) {
+		System.out.println("UserController/idCheck()");
+		
+		return userService.checkId(inputId);
+	}
 	
 	
 	//회원가입 폼
@@ -80,4 +93,6 @@ public class UserController {
 		
 		return "redirect:/";
 	}
+	
+	
 }

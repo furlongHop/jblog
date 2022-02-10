@@ -13,6 +13,15 @@ public class UserDao {
 	private SqlSession sqlSession;
 
 	
+	//아이디 중복 체크
+	public int checkId(String id) {
+		System.out.println("UserDao/checkId()");
+		
+		int count = sqlSession.selectOne("user.checkId", id);
+		
+		return count;
+	}
+	
 	//회원가입
 	public int userInsert(UserVo userVo) {
 		System.out.println("UserDao/userInsert()");
@@ -34,4 +43,6 @@ public class UserDao {
 		
 		return authUser;
 	}
+	
+	
 }

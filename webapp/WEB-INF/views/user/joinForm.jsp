@@ -8,6 +8,9 @@
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
+<!-- jquery ajax 사용시 추가 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+
 </head>
 <body>
 	<div id="center-content">
@@ -30,7 +33,7 @@
 		      		</tr>
 		      		<tr>
 		      			<td></td>
-		      			<td id="tdMsg" colspan="2">사용할 수 있는 아이디 입니다.</td>
+		      			<td id="tdMsg" colspan="2"></td>
 		      		</tr> 
 		      		<tr>
 		      			<td><label for="txtPassword">패스워드</label> </td>
@@ -64,6 +67,52 @@
 	</div>
 
 </body>
+
+<script type="text/javascript">
+
+	// 이벤트: 아이디 체크 버튼을 클릭했을 때
+	$("#btnIdCheck").on("click", function(){
+		console.log("출력");
+		
+		var inputId = $("#txtId").val(); //id가 txtId인 폼 요소에 작성된 값을 해당 값으로 설정, inputId 변수에 담는다.
+		checkId(inputId);
+	});
+
+	
+	// 기능: 아이디 중복 체크
+	function checkId(inputId){// 기능 따로 정의 --> 변수 입력해주기
+		
+		//요청
+		$.ajax({
+			/*요청할 데이터*/
+			url : "${pageContext.request.contextPath}/user/idCheck",
+			type : "post",
+			//contentType : "application/json",
+			/*↓ url에 파라미터로 들어갈 데이터*/
+			data :{id : inputId}, //{필드명: 변수 이름}
+			/*응답 받을 데이터*/
+			dataType : "text", //controller에서 return 타입이 String
+			success : function(result) { 
+				/*성공 시 처리해야 할 코드*/
+				if (result == "available") {
+					$("#tdMsg").text("사용할 수 있는 아이디 입니다.");
+				}
+				else {
+					$("#tdMsg").text("이미 사용중인 아이디입니다.");	
+				}
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});//ajax
+		
+	};
+
+
+
+
+</script>
 
 
 </html>

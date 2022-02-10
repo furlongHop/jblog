@@ -13,6 +13,19 @@ public class UserService {
 	private UserDao userDao;
 	
 	
+	//아이디 중복 체크
+	public String checkId(String id) {
+		System.out.println("UserService/checkId()");
+		
+		int count = userDao.checkId(id);
+		
+		if(count>0) {
+			return "inuse"; 
+		}else {
+			return "available";
+		}
+	}
+	
 	//회원가입
 	public void join(UserVo userVo) {
 		System.out.println("UserService/join()");

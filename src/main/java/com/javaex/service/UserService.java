@@ -20,9 +20,9 @@ public class UserService {
 		int count = userDao.checkId(id);
 		
 		if(count>0) {
-			return "inuse"; 
+			return "1"; 
 		}else {
-			return "available";
+			return "0";
 		}
 	}
 	

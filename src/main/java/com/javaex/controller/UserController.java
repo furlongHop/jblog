@@ -28,8 +28,8 @@ public class UserController {
 	@RequestMapping(value="/idCheck")
 	public String idCheck(@RequestParam("id") String inputId) {
 		System.out.println("UserController/idCheck()");
-		
-		return userService.checkId(inputId);
+
+		return userService.checkId(inputId); 
 	}
 	
 	

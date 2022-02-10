@@ -30,6 +30,8 @@
 		      			<td><label for="txtId">아이디</label></td>
 		      			<td><input id="txtId" type="text" name="id"></td>
 		      			<td><button id="btnIdCheck" type="button">아이디체크</button></td>
+		      			<!-- 아이디 중복 체크 확인 여부 -->
+		      			<input type="hidden" name="idCheck2" value="idUnchecked"/>
 		      		</tr>
 		      		<tr>
 		      			<td></td>
@@ -72,7 +74,7 @@
 
 	// 이벤트: 아이디 체크 버튼을 클릭했을 때
 	$("#btnIdCheck").on("click", function(){
-		console.log("출력");
+		console.log("아이디 체크");
 		
 		var inputId = $("#txtId").val(); //id가 txtId인 폼 요소에 작성된 값을 해당 값으로 설정, inputId 변수에 담는다.
 		checkId(inputId);
@@ -91,14 +93,17 @@
 			/*↓ url에 파라미터로 들어갈 데이터*/
 			data :{id : inputId}, //{필드명: 변수 이름}
 			/*응답 받을 데이터*/
-			dataType : "text", //controller에서 return 타입이 String
+			dataType : "json", //controller에서 return 타입이 String
 			success : function(result) { 
+				console.log(result)
 				/*성공 시 처리해야 할 코드*/
-				if (result == "available") {
+				if (result == "0") {
+					$("#idCheck2").val("idChecked");
 					$("#tdMsg").text("사용할 수 있는 아이디 입니다.");
 				}
 				else {
-					$("#tdMsg").text("이미 사용중인 아이디입니다.");	
+					$("#txtId").val("");
+					$("#tdMsg").text("이미 사용중인 아이디입니다.");
 				}
 				
 			},
@@ -109,7 +114,28 @@
 		
 	};
 
-
+	//이벤트: 회원 가입 버튼을 눌렀을 때
+	$("#btnJoin").on("click",function(){
+		//아이디 중복 체크 확인 여부, 약관 동의 여부 미완성
+		console.log("회원가입")
+		
+		var id = $("#txtId").val();
+		//var idcheck = $("#idCheck2").val();
+		var pw = $("#txtPassword").val();
+		var name = $("#txtUserName").val();
+		
+		if(id == ""){
+			alert("아이디를 입력 해주세요.");
+			return false;
+		}else if(pw == ""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}else if(name == ""){
+			alert("이름을 입력 해주세요.");
+			return false;
+		}
+		
+	});
 
 
 </script>

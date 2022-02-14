@@ -10,14 +10,14 @@ import com.javaex.service.BlogService;
 
 @Controller
 @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
-public class BlogController {
+public class BlogMainController {
 	
 	@Autowired
 	private BlogService blogService;
 	
 	@RequestMapping("/{id}")
 	public String blogMain(@PathVariable("id") String id) {
-		System.out.println("BlogController/blogMain()");
+		System.out.println("BlogMainController/blogMain()");
 		
 		
 		
